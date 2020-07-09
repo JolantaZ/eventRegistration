@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Event</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/mainTheme.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+
+</head>
+
+<body>
+<div th:include="menu::menufrag" id="menu"></div>
+
+<div id="wrapper">
+    <div id="logo">
+        <img th:src ="@{/images/logo.png}"/>
+
+         <div id="event_box">
+            <h1 th:text="${event.title}" id="event_title"></h1>
+            </hr>
+            <p th:text="${event.description}" id="event_desc"></p>
+            <hr/>
+            <span>When</span><br/>
+            <p th:text="${formattedTerm}" class="event_details"></p>
+            <hr/>
+            <span>Where</span><br/>
+            <p th:text="${event.location}" class="event_details"></p>
+            <hr/>
+            <span>Price</span><br/>
+            <p th:text="${event.price}" class="event_details"></p><p class="event_details"> PLN</p>
+            <hr/>
+
+            <div id="buttons">
+                <a th:href="${'/register/' + event.idEvent}">Register</a>
+                <a href="#">Delete</a>
+                <a href="#">Edit</a>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div th:replace="footer::footerfrag" id="footer"></div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" type="text/css" th:href="@{/mainTheme.css}" />
+</head>
+<body>
+
+<div th:fragment="menufrag" id="menu">
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/admin">Admin area</a></li>
+
+        <li th:if="!${isLogged}"style="float: right; margin-right: 40px"><a href="/login">Login</a></li>
+        <li th:if="${isLogged}" style="float: right">
+            <form th:action="@{/logout}" method="post" class="logout-form">
+                <input type="submit" value="Logout" name="logout" id="logout">
+            </form>
+        </li>
+
+        <li th:if="${isLogged}" style="float: right"><p id="userInfo" th:text="${email}" /></li>
+        <!--<li th:if="${isLogged}" style="float: right"><a href="/logout">Wyloguj</a></li> -->
+
+
+    </ul>
+</div>
+
+<!--
+<div th:fragment="menufrag" id="menu">
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/admin">Admin area</a></li>
+        <li th:if="!${isLogged}"style="float: right; margin-right: 40px"><a href="/login">Login</a></li>
+        <li th:if="${isLogged}" style="float: right"><p id="userInfo" th:text="${email}" /></li>
+        </  !--<li th:if="${isLogged}" style="float: right"><a href="/logout">Wyloguj</a></li> --/>
+        <li th:if="${isLogged}" style="float: right"><form th:action="@{/logout}" method="post" class="logout-form">
+            <input type="submit" value="Logout" name="logout" id="logout">
+        </form></li>
+    </ul>
+</div>
+-->
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Register Event</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/form.css}" />
+    <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+<!-- <span th:utext="${}" class="successBottom"></span> -->
+
+<div class="form-style-10" style="width: 80%">
+    <h1>Error occurred... <a href="/home">X</a></h1>
+    <div th:utext="${exception.message}"><p>${exception.message}</p></div>
+</div>
+
+
+</body>
+</html>

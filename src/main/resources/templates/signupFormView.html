@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sign in</title>
+
+ <link rel="stylesheet" type="text/css" th:href="@{/form.css}" />
+ <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+ 
+</head>
+
+<body>
+	
+	<div class="form-style-10">
+	<h1>Sign Up Now! <a href="/home">X</a>
+        <span>Sign up and participate in TECH world!</span></h1>
+
+	<form th:action="@{/signup}" th:object="${user}" method="post">
+
+    <div class="section"><span>1</span>Personal info</div>
+    <div class="inner-wrap">
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="errorMessage">Errors</p>
+        <label>Your Full Name <input type="text" th:field="*{name}" name="field1"/></label>
+
+        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="errorMessage">Errors</p>
+		<label>Phone Number <input type="text" th:field="*{phone}" name="field2" /></label>
+    </div>
+
+    <div class="section"><span>2</span>Login info</div>
+    <div class="inner-wrap">
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="errorMessage">Errors</p>
+        <label>Email Address <input type="email" th:field="*{email}" name="field3" /></label>
+
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="errorMessage">Errors</p>
+        <label>Password <input type="password" minlenght="6" required size="10" th:field="*{password}" name="field4" /></label>
+
+        <p th:if="${#fields.hasErrors('retypePassword')}" th:errors="*{retypePassword}" class="errorMessage">Errors</p>
+        <label>Confirm Password <input type="password" minlenght="6" required size="10" th:field="*{retypePassword}" name="field5" /></label>
+    </div>
+
+    <div class="button-section">
+     <input type="submit" value="Sign up" name="Sign Up" />
+     <span class="privacy-policy">
+     You already have an account? <a href="/login">Log in</a>
+     </span>
+    </div>
+	</form>
+
+	</div>
+	
+
+	
+</body>
+</html>

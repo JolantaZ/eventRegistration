@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Kontakt</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/mainTheme.css}" />
+
+</head>
+
+<body>
+    <div th:include="menu::menufrag" id="menu"></div>
+<div id="wrapper">
+    <div id="logo">
+        <img th:src ="@{/images/logo.png}"/>
+
+            <div id="title_kontakt">
+                <h2>Contact information</h2>
+                <p>If you want to contact us, you can come to our office, send an e-mail or call.</p>
+                <p>Office headquarters: <br/>
+                ul. Armii Krajowej X <br/>
+                00-754 Warszawa <br/>
+                    <br/>
+                Phone: <br/>
+                123 456 789 <br/>
+                    <br/>
+                E-mail: <br/>
+                hackevents@gmail.com <br/>
+                </p>
+
+            </div>
+
+
+
+    </div>
+
+    <div th:replace="footer::footerfrag" id="footer"></div>
+
+</div>
+
+</body>
+</html>

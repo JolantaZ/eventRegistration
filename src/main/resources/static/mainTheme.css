@@ -36,6 +36,12 @@ a:hover {
 #logo a {
 	text-decoration: none;
 	border: 0px;
+	color: #4D4D4D;
+	font-size: 15px;
+}
+
+#logo a:hover {
+	text-decoration: underline;
 }
 
 #menu {
@@ -196,13 +202,23 @@ a:hover {
 h2 {
 	font-size: 22px;
 	font-weight:normal;
-	color: #0e88b4;
 }
 
 #sidebar {
 	width: 280px;
 	float: left;
 }
+
+.panel_admin {
+	width: 600px;
+	padding: 10px 10px;
+	border: solid gray thin;
+	border-radius: 4px;
+	margin: 2px;
+	background-color: whitesmoke;
+
+}
+
 
 /*
 #solid {

@@ -1,0 +1,15 @@
+p {
+    font-size: 16px;
+    font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", sans-serif;
+    line-height: 1.5;}
+
+.blue_back {
+    font-size: 16px;
+    color: #ffffff; font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", sans-serif;
+    line-height: 1.5;
+    padding: 15px 0;
+    text-align: center;}
+
+h5 {
+    margin-top: 10px;
+}

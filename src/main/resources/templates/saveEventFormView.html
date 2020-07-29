@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Register Event</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/form.css}" />
+    <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+<span th:utext="${successMessage}" class="successMessage"></span>
+
+<div class="form-style-10" style="width: 80%">
+    <h1>Register new event <a href="/admin">X</a>
+        <span>Type details about new event</span></h1>
+
+    <form th:action="@{/eventSave}" th:object="${event}" method="post">
+
+        <div class="section"><span>1</span>Title and description</div>
+        <div class="inner-wrap">
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="errorMessage">Errors</p>
+            <label>Title<input type="text" th:field="*{title}" name="field1"/></label>
+
+        </div>
+
+        <div class="section"><span>2</span>Event description</div>
+        <div class="inner-wrap">
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="errorMessage">Errors</p>
+            <label>Description<textarea th:field="*{description}" name="field2" cols="10"></textarea></label>
+        </div>
+
+        <div class="section"><span>3</span>Other details</div>
+        <div class="inner-wrap">
+            <p th:if="${#fields.hasErrors('term')}" th:errors="*{term}" class="errorMessage">Errors</p>
+            <label>Date and time <input type="datetime-local" th:field="*{term}" name="field3" /></label>
+
+            <p th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="errorMessage">Errors</p>
+            <label>Location<input type="text" th:field="*{location}" name="field4"/></label>
+
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="errorMessage">Errors</p>
+            <label>Price <input type="number" step="0.01" th:field="*{price}" name="field5" /></label>
+
+        </div>
+
+        <div class="button-section">
+            <input type="submit" value="Save" name="Save" />
+        </div>
+    </form>
+
+
+</div>
+
+
+</body>
+</html>

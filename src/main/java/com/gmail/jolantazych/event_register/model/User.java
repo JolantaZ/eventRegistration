@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
+// @NotEmpty - validates that the property is not null or empty; can be applied to String, Collection, Map or Array
 
 @Entity
 @Table(name = "USER")
@@ -16,22 +17,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
 
-    @Column(name = "Email")
-    @NotEmpty(message = "Field cannot be empty!") @NotNull @Email(message = "Invalid email address!")
+    //unique = true - ponowne postawienie bazy dla "create" wywala się przez constrainty
     private String email;
 
-    @NotEmpty(message = "Field cannot be empty!") @NotNull @Length(min= 6, message = "Password min lenght is 6 characters")
+    //@Length(min= 6, message = "Password min lenght is 6 characters")
     private String password;
 
-    //@NotEmpty(message = "Field cannot be empty!") @NotNull
-    @Transient
-    private String retypePassword;
-
-    @Column(name = "Full_Name") @NotNull
-    @NotEmpty(message = "Field cannot be empty!")
+    @Column(name = "Full_Name")
     private String name;
 
-    @Column(name = "Phone_Number")
+    @Column(name = "Phone_Number")  // String? możliwość wpisywania tylo cyfr?
     private String phone;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -82,14 +77,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRetypePassword() {
-        return retypePassword;
-    }
-
-    public void setRetypePassword(String retypePassword) {
-        this.retypePassword = retypePassword;
     }
 
     public String getName() {

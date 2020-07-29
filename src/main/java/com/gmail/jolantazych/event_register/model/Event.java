@@ -34,10 +34,10 @@ public class Event {
     private LocalDateTime term;
 
     @Column(name = "address")
-    @NotNull(message = "Field cannot be empty!")
+    @NotEmpty(message = "Field cannot be empty!")
     private String location;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<User> users;
 
     public Event() {

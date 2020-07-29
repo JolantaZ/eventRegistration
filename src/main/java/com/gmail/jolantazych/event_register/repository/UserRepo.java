@@ -18,7 +18,15 @@ public interface UserRepo extends CrudRepository<User, Long> {
 
     User findByEmailAndRoles(String email, Role role);
 
+
     User findByEmailAndRolesAndRoles(String email, Role role1, Role role2); // wyszukiwanie dla więcej niż 1 rola
+
+    /*
+    java.lang.IllegalArgumentException: Failed to create query for method public abstract
+    com.gmail.jolantazych.event_register.model.User com.gmail.jolantazych.event_register.repository.UserRepo.findByEmailAndRoles(java.lang.String,java.util.Set)!
+    Operator SIMPLE_PROPERTY on roles requires a scalar argument, found interface java.util.Set in method public abstract
+     */
+    //User findByEmailAndRoles(String email, Set<Role> role);  //NIE MOŻNA DAWAĆ ARG. SET, LIST ITD.
 
 
 

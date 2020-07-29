@@ -1,6 +1,7 @@
 package com.gmail.jolantazych.event_register.controllers;
 
 import com.gmail.jolantazych.event_register.model.User;
+import com.gmail.jolantazych.event_register.model.UserDTO;
 import com.gmail.jolantazych.event_register.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,30 +25,30 @@ public class SignupController {
 
     @GetMapping("/signup")
     public String goToSigninPage(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("userDTO", new UserDTO()); // binding widoku z modelem
         return "signupFormView";
     }
 
     @PostMapping("/signup")
-    public String registerUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
+    public String registerUser( @ModelAttribute @Valid UserDTO userDTO, BindingResult result, Model model) {
 
-        if (result.hasErrors()) {
+        if (result.hasErrors()) { // pozwala wyświetlić błędy w formularzu, trzeba w htmlu dodać th:error
             return "signupFormView";
         }
-
-        if (!user.getPassword().equals(user.getRetypePassword())) {
-            result.rejectValue("retypePassword", "pass.error", "Password confirmation went wrong!");
+        // s = pole obiektu, s1 = kod błędu, s2 = komunikat błędu
+        if (!userDTO.getPassword().equals(userDTO.getRetypePassword())) {
+            result.rejectValue("retypePassword", "pass.error", "Password confirmation went wrong!"); // trzeba stworzyć kod w s1 - nigdzie więcej nie wpisuję tej wartości
             return "signupFormView";
         }
-        if (userService.isUserAlreadyExists(user.getEmail())) {
+        if (userService.isUserAlreadyExists(userDTO.getEmail())) {
             result.rejectValue("email", "email.error", "User with this e-mail already exists!");
             return "signupFormView";
         }
 
-        User newUser = userService.registerWithRoleUser(user);
-        model.addAttribute("successMessage", "User has been register succesfully!");
-
-        System.out.println("New user: " + newUser);
-        return "homeView";
+        User newUser = userService.registerWithRoleUser(userDTO);
+        model.addAttribute("successMessage", "User has been register succesfully!"); // jeśli przekazuje komunikat do modelu muszę zwracać plik html
+        //model.addAttribute("userDTO", new UserDTO());  //to po co?
+        System.out.println("New user: " + newUser); // todo zastąpić logiem?
+        return "homeView";     // musi być tak bo przekazujemy do widoku komunikat successMessage a NIE tak: "redirect:/home";
     }
 }

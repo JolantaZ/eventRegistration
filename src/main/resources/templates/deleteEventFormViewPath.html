@@ -23,6 +23,7 @@
             <div th:if="${exception}">
                 <p th:utext="${exception}" class="errorMessage">${exception.message}</p>
             </div>
+            <label>Requested event Identifier:</label><p th:text="${idEvent}"></p>
             <label>ID<input type="number" name="event_id"/></label>
         </div>
 

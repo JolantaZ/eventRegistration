@@ -4,17 +4,17 @@ import com.gmail.jolantazych.event_register.model.User;
 import com.gmail.jolantazych.event_register.service.MailService;
 import com.gmail.jolantazych.event_register.service.RegisterService;
 import com.gmail.jolantazych.event_register.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 @Controller
 public class EventRegisterController {
@@ -22,32 +22,34 @@ public class EventRegisterController {
     private RegisterService registerService;
     private MailService mailService;
 
+    private static final String MAIL_SUBJECT = "Confirmation of registration for the event";
+
+    @Autowired
     public EventRegisterController(RegisterService registerService, MailService mailService) {
         this.registerService = registerService;
         this.mailService = mailService;
     }
 
-    private static final String MAIL_SUBJECT = "Confirmation of registration for the event";
-
-
-    // todo poprawić implementację
-    @GetMapping("/register/{idEvent}")
-    public String registerOnEvent(@PathVariable Long idEvent, Model model) {
+    // jak zrobić żeby operacje z tego controllera wykonały się w ramach jednej transakcji? zapis do bazy i mail - wykonają się oba albo żadne
+    @PostMapping("/register")
+    public String registerOnEvent(@RequestParam Long idEvent, Model model) throws MessagingException {
 
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User user = registerService.saveUserAndEvent(idEvent, userEmail);
+        // user zapisany w bazie na wydrzenie - komunikat o tym? rzuci wyjątkiem z serwisu
 
-
+        //send mail - może się nie wysłać a user zapisany w bazie
+        // przenieść do innej metody
         String completedEmailContent = registerService.completeEmailContent(user);
         try {
-            mailService.sendMail(userEmail, MAIL_SUBJECT, completedEmailContent);
+            mailService.sendMail(userEmail, MAIL_SUBJECT, completedEmailContent); // wyjątek może wystąpić
         } catch (MessagingException e) {
-            return "Error occureed during sending e-mail";
+            throw new MessagingException("Error occureed during sending e-mail"); //return "Error occureed during sending e-mail"; - odczytywane jak widok, którego nie znajduje
         }
 
 
-        return "redirect:/success";
+        return "redirect:/success";  // przekierowanie na stronę successRegister, tam komunikat że registered i dane poszły na maila
 
 
     }
@@ -56,22 +58,17 @@ public class EventRegisterController {
 
     @GetMapping("/success")
     public String goToSuccesPage() {
-        return "successRegisterView";
+        return "successRegisterView";  // todo ostylować htmla
     }
 
 
 
     @ExceptionHandler({IllegalStateException.class})
-    public ModelAndView handleErrorss(HttpServletRequest request, Exception exc) {
+    public ModelAndView handleErrors(HttpServletRequest request, Exception exc) {
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("exception", exc.getMessage());
-        modelAndView.setViewName("errorView");
+        modelAndView.addObject("exception", exc.getMessage());  //todo dodać .getMessage ??
+        modelAndView.setViewName("errorView");  // todo ostylować komunikat
         return modelAndView;
-
     }
-
-
-
-
 }

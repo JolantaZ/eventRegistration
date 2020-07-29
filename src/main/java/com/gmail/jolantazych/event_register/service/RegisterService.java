@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.context.IWebContext;
 
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
@@ -22,17 +23,19 @@ public class RegisterService {
     private TemplateEngine templateEngine;
 
     @Autowired
-    public RegisterService(UserRepo userRepo, EventRepo eventRepo) {
+    public RegisterService(UserRepo userRepo, EventRepo eventRepo, TemplateEngine templateEngine) {
         this.userRepo = userRepo;
         this.eventRepo = eventRepo;
+        this.templateEngine = templateEngine;
     }
+
 
     public User saveUserAndEvent(Long eventID, String email) {
         User user = userRepo.findByEmail(email);
         Event event = eventRepo.findByIdEvent(eventID).get();
         if(!isUserRegisterForEvent(user)) {
             user.setEvent(event);
-            userRepo.save(user);
+            userRepo.save(user); // exception o validacji retypepassword
         }
         else {
             throw new IllegalStateException("User can be register for 1 event at a time!");
@@ -51,6 +54,8 @@ public class RegisterService {
         Event event = user.getEvent();
 
         Context context = new Context();
+
+        context.setVariable("header", "Event registration confirmation");
         context.setVariable("email", user.getEmail());
         context.setVariable("userName", user.getName());
         context.setVariable("eventTitle", event.getTitle());
@@ -58,7 +63,8 @@ public class RegisterService {
         context.setVariable("eventPrice", BigDecimal.valueOf(event.getPrice()).toString());
         context.setVariable("bankAccount", BANK_ACCOUNT);
 
-        return templateEngine.process("mailView", context);
+        String mailView = templateEngine.process("mailView", context);
+        return mailView;
     }
 
 

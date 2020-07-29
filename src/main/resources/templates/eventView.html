@@ -31,11 +31,13 @@
             <p th:text="${event.price}" class="event_details"></p><p class="event_details"> PLN</p>
             <hr/>
 
-            <div id="buttons">
-                <a th:href="${'/register/' + event.idEvent}">Register</a>
-                <a href="#">Delete</a>
-                <a href="#">Edit</a>
-            </div>
+             <div id="buttons_form" th:if="${isLogged}">
+                 <form th:action="@{/register(idEvent=${event.idEvent})}" method="post">
+                     <input type=submit value="Register" name="Register" class="event_buttons"/>
+                 </form>
+                 <a th:href="${'/eventDeleteParam/' + event.idEvent}">Delete</a>
+                 <a href="#" >Edit</a>
+             </div>
 
         </div>
 

@@ -138,7 +138,10 @@ span {
 }
 
 #event_box a {
-	padding: 10px;
+	padding: 7px;
+	width: 81px;
+	display: block;
+	text-align: center;
 	background-color: #0047ab;
 	font-size: 15px;
 	color: #FFF;
@@ -146,7 +149,7 @@ span {
 	-khtml-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	margin: 0 20px;
+	margin: 0 45px;
 }
 
 #event_box a:hover {
@@ -154,6 +157,23 @@ span {
 	color: #CCC;
 }
 
-#buttons {
+#buttons_form {
+	display: -webkit-box;
 	padding: 20px 20px;
+}
+
+.event_buttons {
+	padding: 7px;
+	width: 95px;
+	background-color: #0047ab;
+	font-size: 15px;
+	color: #FFF;
+	margin: 0 45px;
+	-webkit-border-radius: 5px;
+	border: none;
+}
+
+#buttons_form input:hover {
+	background-color: #0a6997;
+	color: #CCC;
 }

@@ -1,47 +1,50 @@
 package com.gmail.jolantazych.event_register.service;
 
-import com.gmail.jolantazych.event_register.model.Event;
 import com.gmail.jolantazych.event_register.model.Role;
 import com.gmail.jolantazych.event_register.model.User;
-import com.gmail.jolantazych.event_register.repository.EventRepo;
+import com.gmail.jolantazych.event_register.model.UserDTO;
 import com.gmail.jolantazych.event_register.repository.RoleRepo;
 import com.gmail.jolantazych.event_register.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
 
     private RoleRepo roleRepo;
     private UserRepo userRepo;
-    private EventRepo eventRepo;
-
     public UserDetails userDetails;
 
-    public UserService(RoleRepo roleRepo, UserRepo userRepo, EventRepo eventRepo) {
+    @Autowired
+    public UserService(RoleRepo roleRepo, UserRepo userRepo) {
         this.roleRepo = roleRepo;
         this.userRepo = userRepo;
-        this.eventRepo = eventRepo;
     }
 
-    public User registerWithRoleUser(User user) {
+    public User registerWithRoleUser(UserDTO userDTO) {
+        User user = new User();
+        user.setName(userDTO.getName());
+        user.setPhone(userDTO.getPhone());
+        user.setEmail(userDTO.getEmail());
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
         Role userRole = roleRepo.findByRole("User");
         Set<Role> roles = new HashSet<>();
         roles.add(userRole);
         user.setRoles(roles);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 
@@ -51,12 +54,12 @@ public class UserService implements UserDetailsService {
         return user != null;
     }
 
-
+    // metoda wykorzystywana przy logowaniu
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User activeUser = userRepo.findByEmail(email);
         if (activeUser == null) {
-            throw new UsernameNotFoundException("User not found!");
+            throw new UsernameNotFoundException("User not found!"); //brak info dla użytkownika o błędzie, w konsoli też nie ma info
         }
 
         String userEmail = activeUser.getEmail();

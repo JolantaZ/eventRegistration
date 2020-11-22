@@ -13,7 +13,6 @@ public class Role {
     @Column(name = "name")
     private String role;
 
-    // bez tego pola działało
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 

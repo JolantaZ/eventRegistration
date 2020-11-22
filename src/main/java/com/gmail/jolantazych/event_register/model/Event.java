@@ -37,7 +37,7 @@ public class Event {
     @NotEmpty(message = "Field cannot be empty!")
     private String location;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
     private List<User> users;
 
     public Event() {
@@ -105,6 +105,16 @@ public class Event {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+        user.setEvent(this);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+        user.setEvent(null);
     }
 
     @Override

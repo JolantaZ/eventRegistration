@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/eventDeleteParam/{idEvent}").hasRole("ADMIN")
                 .and()
-                .exceptionHandling().accessDeniedPage("/accessDenied") //nie działa kiedy chcemy się dostać do zasobu z metodą post
+                .exceptionHandling().accessDeniedPage("/accessDenied")
                 .and()
                 .formLogin().loginPage("/login")
                 .loginProcessingUrl("/login")

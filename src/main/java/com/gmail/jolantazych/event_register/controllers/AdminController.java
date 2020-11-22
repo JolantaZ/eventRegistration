@@ -2,7 +2,6 @@ package com.gmail.jolantazych.event_register.controllers;
 
 import com.gmail.jolantazych.event_register.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,7 @@ public class AdminController {
     public String goToAdminPage(Model model) {
         authService.showLoggedUser(model);
         return "adminAreaView";
-    } // todo ostylować w divy z underlinem hover
+    }
 
 
     @GetMapping("/accessDenied")

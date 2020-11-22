@@ -29,12 +29,10 @@ public class User {
     @Column(name = "Phone_Number")  // String? możliwość wpisywania tylo cyfr?
     private String phone;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles")
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Event")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Event event;
 
     public User() {
